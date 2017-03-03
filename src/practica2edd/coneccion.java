@@ -29,8 +29,6 @@ public class coneccion {
         RequestBody formBody = new FormEncodingBuilder()
                 .add("dato",palabra)
                 .build();
-        
-        //nuevo try
         try {
             URL url = new URL("http://0.0.0.0:5000/insertarLista");
             Request request = new Request.Builder().url(url).post(formBody).build();
@@ -44,10 +42,13 @@ public class coneccion {
         }
        return null;
     }
-        //fin nuevo try
+    public static String deleteLista(String id){
         
-        /*try {
-            URL url = new URL("http:/0.0.0.0:5000/insertarLista");
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",id+"")
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/eliminarLista");
             Request request = new Request.Builder().url(url).post(formBody).build();
             Response response = webClient.newCall(request).execute();
             String response_string = response.body().string();//y este seria el string de las respuesta
@@ -57,8 +58,25 @@ public class coneccion {
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
-        
-        return "error al hacer el request";
-    }*/
+       return null;
+    }
     
+    public static String serchLista(String busqueda){
+        
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",busqueda)
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/buscaLista");
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+       return null;
+    }
 }

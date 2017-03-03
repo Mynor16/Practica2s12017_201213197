@@ -72,12 +72,14 @@ class Lista:
 
 	def buscar(self,elemento):
 		aux = self.primero
-		if aux.palabra == None:
-			return None
+		retorno=""
+		if aux == None:
+			return "lisra vacia"
 		else:
 
 			if aux.palabra == elemento:
-				return aux.id
+				print"el elemento ",aux.palabra," es igual al primer elemento: ", elemento
+				return "Elemento encontrado en la posicion: ",aux.id
 			else:
 				t = True
 				while aux.siguiente != None and t:
@@ -85,18 +87,35 @@ class Lista:
 					if aux.palabra == elemento:
 						print"el elemento ",aux.palabra," es igual a ", elemento
 						t = False
-						return aux.id
+						return "Elemento encontrado en la posicion: ",aux.id
 				if t==True:
 					print "ID no encontrado"
+					return "No se encontro el dato :("
 
 miLista = Lista()
+
 @app.route('/insertarLista',methods=['POST'])
 def insertarLista():
 	print"insertando en lista"
 	parametro= str(request.form['dato'])
 	miLista.insertar(str(parametro))
 	miLista.consultar()
-	return "ok"
+	return "ok insertar"
+
+@app.route('/eliminarLista',methods=['POST'])
+def eliminarLista():
+	print"eliminando de lista"
+	parametro = str(request.form['dato'])
+	miLista.eliminar(int(parametro))
+	miLista.consultar()
+	return "ok eliminar"
+
+@app.route('/buscaLista',methods=['POST'])
+def buscarLista():
+	print"buscando en lista"
+	parametro = str(request.form['dato'])
+	return str(miLista.buscar(str(parametro)))
+
 
 
 if __name__ == "__main__":

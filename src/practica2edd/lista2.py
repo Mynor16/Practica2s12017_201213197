@@ -72,12 +72,12 @@ class Lista:
 
 	def buscar(self,elemento):
 		aux = self.primero
-		if aux.palabra == None:
-			return None
+		if aux == None:
+			return "lisra vacia"
 		else:
 
 			if aux.palabra == elemento:
-				return aux.id
+				return "Elemento encontrado en la posición: ",aux.id
 			else:
 				t = True
 				while aux.siguiente != None and t:
@@ -85,9 +85,10 @@ class Lista:
 					if aux.palabra == elemento:
 						print"el elemento ",aux.palabra," es igual a ", elemento
 						t = False
-						return aux.id
+						return "Elemento encontrado en la posición: ",aux.id
 				if t==True:
-					print "ID no encontrado"
+					print "dato no encontrado"
+					return "No se encontro el dato :("
 
 """miLista = Lista()
 @app.route('/insertarLista',methods=['POST'])
@@ -131,7 +132,6 @@ class principal:
 				lista.eliminar(elemento)
 			elif option == 4:
 				elemento = raw_input("escrie el nombre a buscar: ")
-				print "resultado encontrado en el id: "
 				print lista.buscar(elemento)
 			elif option == 5:
 				break

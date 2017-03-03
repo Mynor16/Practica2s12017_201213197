@@ -84,8 +84,18 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Borrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -306,6 +316,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(!"".equals(this.jTextField1.getText())){
         String palabra;
         palabra = this.jTextField1.getText();
         coneccion conect = new coneccion();
@@ -313,7 +324,34 @@ public class Principal extends javax.swing.JFrame {
         if(insertLista!= null)
         System.out.println(insertLista);
         this.jTextField1.setText("");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(this.jTextField2.getText())){
+        String id;
+        id = this.jTextField2.getText();
+        coneccion conect = new coneccion();
+        String eliminaLista = conect.deleteLista(id);
+        if(eliminaLista!= null)
+        System.out.println(eliminaLista);
+        this.jTextField2.setText("");
+                }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(this.jTextField3.getText())){
+        String busqueda;
+        busqueda = this.jTextField3.getText();
+        coneccion conect = new coneccion();
+        String serch = conect.serchLista(busqueda);
+        if(serch!= null)
+        System.out.println(serch);
+        this.jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
