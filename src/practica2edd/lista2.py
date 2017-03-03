@@ -89,22 +89,23 @@ class Lista:
 				if t==True:
 					print "ID no encontrado"
 
-miLista = Lista()
+"""miLista = Lista()
 @app.route('/insertarLista',methods=['POST'])
 def insertarLista():
-	print"insertando en lista"
 	parametro= str(request.form['dato'])
-	miLista.insertar(str(parametro))
+	miLista.insertar(srt(parametro))
 	miLista.consultar()
-	return "ok"
+	return 'ok'
 
 
 if __name__ == "__main__":
-	print"servicio corriendo"
-	app.run(debug = True, host = '0.0.0.0')
+  app.run(debug=True, host='0.0.0.0')"""
 
 
-""""class principal:
+		
+
+
+class principal:
 
 
 	lista = Lista()
@@ -136,4 +137,4 @@ if __name__ == "__main__":
 				break
 		except Exception as e:
 			print "ocurrio un error"
-			print e"""
+			print e
