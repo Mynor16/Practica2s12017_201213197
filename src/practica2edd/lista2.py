@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+from graphviz import Digraph
 app = Flask('EDD_PRACTICA2')
 
 class nodoLista:
@@ -28,10 +29,11 @@ class Lista:
 				else:
 					aux = aux.siguiente
 		self.contador = self.contador + 1
+		self.graficarLista()
 
 	def consultar(self):
 		aux = self.primero
-		if aux.palabra==None:
+		if aux==None:
 			print"lista vacia"
 		else:
 			print aux.id
@@ -45,15 +47,17 @@ class Lista:
 	def eliminar(self,elemento):
 		aux = self.primero
 		aux2 = self.primero
-		if aux.id == None:
+		if aux == None:
 			print "no hay elementos en la lista"
 		else:
 
 			if aux.id == elemento:
 				if aux.siguiente == None:
 					self.primero = nodo()
+					self.graficarLista()
 				else:
 					self.primero = aux.siguiente
+					self.graficarLista()
 			else:
 				t = True
 				while aux.siguiente != None and t:
@@ -64,6 +68,7 @@ class Lista:
 						aux2.siguiente=aux.siguiente
 						aux = None
 						t = False
+						self.graficarLista()
 						break
 					aux2 = aux2.siguiente
 				if t==True:
@@ -90,20 +95,38 @@ class Lista:
 					print "dato no encontrado"
 					return "No se encontro el dato :("
 
+
+	def graficarLista(self):
+		dot = Digraph(comment='GraficaListaSimple')
+		dot  #doctest: +ELLIPSIS
+		aux = self.primero
+		if aux==None:
+			print"lista vacia"
+		else:
+			print aux.id
+			print aux.palabra
+			while aux.siguiente!= None:
+				dot.node(str(aux.id), aux.palabra)
+				dot.node(str(aux.siguiente.id), aux.siguiente.palabra)
+				dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
+				aux = aux.siguiente
+				print aux.id
+				print aux.palabra
+			print(dot.source)
+			dot.render('test-output/ImagenLista.dot', view=False)
+
+
 """miLista = Lista()
 @app.route('/insertarLista',methods=['POST'])
 def insertarLista():
 	parametro= str(request.form['dato'])
-	miLista.insertar(srt(parametro))
+	miLista.insertar(str(parametro))
 	miLista.consultar()
 	return 'ok'
 
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0')"""
-
-
-		
 
 
 class principal:

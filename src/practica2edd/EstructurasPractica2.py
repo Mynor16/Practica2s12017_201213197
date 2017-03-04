@@ -1,20 +1,21 @@
 from flask import Flask, request, Response
 from graphviz import Digraph
 app = Flask('EDD_PRACTICA2')
-
+#clase nodo de la lista simple :3
 class nodoLista:
 	def __init__(self, palabra,correlativo):
 		self.id = correlativo
 		self.palabra = palabra
 		self.siguiente = None
 
-
+#clase lista simple y sus metodos
 class Lista:
 
 	def __init__(self):
 		self.primero = None
 		self.contador=0
 
+#metodo para incertar en la lista simple
 	def insertar(self,parametro):
 		nodo = nodoLista(parametro, self.contador)
 		print "se insertara la palabra: ", nodo.palabra
@@ -32,6 +33,7 @@ class Lista:
 					aux = aux.siguiente
 		self.contador = self.contador + 1
 
+# metodo que imprime en consola todos los nodos de la lista simple
 	def consultar(self):
 		aux = self.primero
 		if aux==None:
@@ -45,6 +47,7 @@ class Lista:
 				print aux.id
 				print aux.palabra
 
+#metodo que extrae por id nodos de la lista simple
 	def eliminar(self,elemento):
 		aux = self.primero
 		aux2 = self.primero
@@ -75,6 +78,7 @@ class Lista:
 					print "ID no encontrado"
 
 
+# metodo que debuelve el id referente al nodo solicitado
 	def buscar(self,elemento):
 		aux = self.primero
 		retorno=""
@@ -97,6 +101,7 @@ class Lista:
 					print "ID no encontrado"
 					return "No se encontro el dato :("
 
+# metodo que genera el archivo.dot de la lista y lugo lo compila generando un pdf
 	def graficarLista(self):
 		dot = Digraph(comment='GraficaListaSimple')
 		dot  #doctest: +ELLIPSIS
@@ -114,10 +119,89 @@ class Lista:
 				print aux.id
 				print aux.palabra
 			print(dot.source)
-			dot.render('test-output/ListaSimple.dot', view=False)
+			dot.render('test-output/ImagenListaSimple.dot', view=False)
 
+#**************************************************************************************************************************
+# clase nodo de la cola
+class nodoCola:
+	def __init__(self, digito,correlativo):
+		self.id = correlativo
+		self.numero = digito
+		self.siguiente = None
+
+
+class Cola:
+
+	def __init__(self):
+		self.primero=None
+		self.contador=0
+
+#metodo que ingresa un nuevo numero a la cola
+	def queue(self,parametro):
+		nodo = nodoCola(parametro, self.contador)
+		print "se encolarpa: ", nodo.palabra
+		if self.primero == None:
+			self.primero = nodo
+			#self.graficarLista()
+		else:
+			aux = self.primero
+			while True:
+				if aux.siguiente == None:
+					aux.siguiente=nodo
+					self.graficarLista()
+					break
+				else:
+					aux = aux.siguiente
+		self.contador = self.contador + 1
+
+#metodo que elimina el elemento mas antiguo de la cola
+	def dequeue(self):
+		deTurno = ""
+		if self.primero == None:
+			return"la cola está vacia"
+		else:
+			deTurno=str(self.primero)
+			aux = self.primero.siguiente
+			self.primero=aux
+			return deTurno
+
+#metodo que imprime todos los elementos contenidos actualmente en la cola
+	def consultarCola():
+		aux = self.primero
+		if aux==None:
+			print"Cola vacia"
+		else:
+			print aux.id
+			print aux.numero
+
+			while aux.siguiente!= None:
+				aux = aux.siguiente
+				print aux.id
+				print aux.numero
+
+#metodo que grafica la cola
+	def graficarCola(self):
+		dot = Digraph(comment='GraficaCola')
+		dot  #doctest: +ELLIPSIS
+		aux = self.primero
+		if aux==None:
+			print"Cola vacia"
+		else:
+			while aux.siguiente!= None:
+				dot.node(str(aux.id), aux.numero)
+				dot.node(str(aux.siguiente.id), aux.siguiente.numero)
+				dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
+				aux = aux.siguiente
+			print(dot.source)
+			dot.render('test-output/ImagenCola.dot', view=False)
+#****************************************************************************************************************************
+
+#declaración de instancia de la lista
 miLista = Lista()
-
+#declaracion de la cola
+miCola = Cola()
+#***************************************************************************************************************************
+#metodos web de la lista
 @app.route('/insertarLista',methods=['POST'])
 def insertarLista():
 	print"insertando en lista"
@@ -140,8 +224,16 @@ def buscarLista():
 	parametro = str(request.form['dato'])
 	return str(miLista.buscar(str(parametro)))
 
-
-
+#**************************************************************************************************************************
+#metodos web de la cola
+@app.route('/insertarCola',methods=['POST'])
+def insertarCola():
+	print"insertando en Cola"
+	parametro= str(request.form['dato'])
+	miCola.queue(str(parametro))
+	miCola.consultarCola()
+	return "ok insertar Cola"
+#**************************************************************************************************************************
 if __name__ == "__main__":
 	print"servicio corriendo"
 	app.run(debug = True, host = '0.0.0.0')

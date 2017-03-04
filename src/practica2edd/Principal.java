@@ -259,6 +259,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton8.setText("Ingresar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Extraer");
 
@@ -352,6 +357,10 @@ public class Principal extends javax.swing.JFrame {
         this.jTextField3.setText("");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
