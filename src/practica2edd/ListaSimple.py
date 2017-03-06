@@ -116,6 +116,206 @@ class Lista:
 			print(dot.source)
 			dot.render('test-output/ListaSimple.dot', view=False)
 
+class nodoMatriz:
+	def __init__(self, nombre,alfa,dominio,lista)
+		self.nombre = nombre
+		self.dominio = dominio
+		self.alfa = alfa
+		self.lista = lista
+		self.arriba = None
+		self.abajo= None
+		self.izquierda = None
+		self.derecha = None
+		self. atras = None
+
+class matrizDispersa:
+	def __init__(self):
+		self.inicio = None
+		self.dominioFinal = None
+		self.alfaFinal = None
+
+	def matrizVacia(self):
+		if self.inicio == None
+		return True
+
+	def agregar(self, nombre, dominio, lDoble):
+		if self.matrizVacia() == True:
+			nodoM = nuevoNodo.nodoMatriz("base","base","base","",lDoble)
+			self.inicio = nodoM
+			self.dominioFinal = nodoM
+			self.alfaFinal = nodoM
+		self.crearDominio(dominio)
+		self.crearAlfa()(nombre[0])
+		aux = self.dominio(dominio)
+		aux2 = self.abecedario(nombre[0])
+		izquierda = ""
+		derecha = ""
+		if(aux.derecha != None):
+			derecha = aux.derecha.dominio
+		if(aux.izquierda != None):
+			izquierda = aux.izquierda.dominio
+		email = nombre+dominio
+		if(aux.abajo == None and aux2.derecha == None):
+			nodoM = nuevoNodo.nodoMatriz(email,nombre[0],dominio,lDoble)
+			print("ingresado nuevo correo ",email)
+			aux.abajo = nodoM
+			nodoM.arriba = aux
+			aux2.derecha = nodoM
+			nuevo.izquierda = aux2
+		else:
+			dominioAux = aux
+			nodoM = nuevoNodo.nodoMatriz(email,nombre[0],dominio,lDoble)
+			print("ingresado nuevo correo",email)
+			validar = False
+			if(self.posicion(dominio,nombre[0]) != True)
+				while (dominioAux != None):
+					if(dominioAux.abajo != None):
+						if(nodoM.alfa < dominioAux.abajo.alfa):
+							nodoM.arriba = dominioAux
+							nodoM.abajo = dominioAux.abajo
+							dominioAux.abajo.arriba = nodoM
+							dominioAux.abajo = nodoM
+							aux_dominio = None
+						else:
+							dominioAux = dominioAux.abajo
+					elif(dominioAux.abajo == None):
+						nodoM.arriba = dominioAux
+						dominioAux.abajo = nodoM
+						dominioAux = None
+					else:
+						dominioAux = dominioAux.abajo
+				self.nodoMedio(aux2, nuevo, izquierda,derecha,aux.izquierda,aux.derecha)
+			else:
+				aux3 = self.nodoX(dominio,nombre[0])
+				if(aux3.atras == None):
+					aux3.atras = nodoM
+				else:
+					while (aux3 != None):
+						if(aux3.atras == None):
+							aux3.atras = nodoM
+						else:
+							aux3 = aux3 = aux3.atras
+	return "ok agregar matriz"
+
+	def crearDominio(self,dominio):
+		if(self.inicio.derecha == None):
+			nuevoD = nuevoNodo.nodoMatriz("base","base",dominio,"","")
+			nuevo.izquierda = self.dominioFinal
+			self.dominioFinal.derecha = nuevoD
+			self.dominioFinal = nuevoD
+		else:
+			aux = self.inicio
+			validar = False
+			while (aux != None):
+				if (aux.dominio == dominio):
+					validar = True
+					aux = None
+				else:
+					aux=aux.derecha
+				if(validar != True):
+					nuevoD = nuevoNodo.nodoMatriz("base","base",dominio,"","")
+					nuevoD.izquierda = self.dominioFinal
+					self.dominioFinal.siguiente=nuevoD
+					self.dominioFinal = nuevoD
+
+	def crearAlfa(self,alfa):
+		if(self.inicio.abajo == None):
+			nuevoA = nuevoNodo.nodoMatriz("base",alfa,"base","","")
+			nuevoA.arriba = self.alfaFinal
+			self.alfaFinal.abajo = nuevoA
+			self.alfaFinal=nuevoA
+		else:
+			aux = self.inicio
+			validar = False
+			while (aux != None):
+				if(aux.alfa == alfa):
+					validar = True
+					aux = None
+				else:
+					aux = aux.abajo
+			if(validar != True):
+				nuevoA = nuevoNodo.nodoMatriz("base",alfa,"base","","")
+				aux = self.inicio
+				while(aux != None):
+					if(aux.abajo != None):
+						if(alfa < aux.abajo.alfa):
+							aux2 = aux.abajo
+							nuevoA.arriba = aux
+							aux.abajo = nuevoA
+							nuevoa.abajo = aux2
+							aux2.arriba = nuevoA
+							aux = None
+						else:
+							aux = aux.abajo
+					elif(aux.abajo == None):
+						nuevoA.arriba = self.alfaFinal
+						self.alfaFinal.abajo=nuevoA
+						self.alfaFinal = nuevoA
+						aux = None
+					else
+						aux = aux.abajo
+
+	def dominio(self, dominio):
+		aux = self.inicio
+		validar = True
+		NodoD = None
+		while(aux != None and validar !=False):
+			if(aux.dominio == dominio):
+				validar = False
+				nodoD = aux
+			else:
+				aux = aux.siguiente
+				validar = True
+		return NodoD
+
+	def alfa(self,alfa):
+		aux = self.inicio
+		validar = True
+		nodoA = None
+		while(aux != None and validar != False):
+			if(aux.alfa == alfa):
+				validar = False
+				nodoA = aux
+			else:
+				aux = aux.abajo
+				validar = True
+		return nodoA
+
+		def posicion(self, dominio,alfa):
+			aux = self.inicio.derecha
+			validar = False
+			while (aux !=None):
+				if(aux.dominio == dominio):
+					aux2 = aux
+					while (aux2 != None):
+						if(aux2.alfa == alfa):
+							aux2 = None
+							validar = True
+						else:
+							aux2 = aux2.abajo
+					aux = None
+				else:
+					aux = aux.derecha
+			return validar
+
+	def nodoX(self,dominio,letra):
+		aux = self.inicio
+		nodoN= None
+		while(aux != None):
+			if (aux.dominio == dominio):
+				aux2 = aux
+				while(aux2 != None):
+					if (aux2.alfa == alfa):
+						nodoN = aux2
+						return nodoN
+						aux2 = None
+					else:
+						aux2 = aux2.abajo
+				aux = None
+			else:
+				aux = aux.siguiente
+				
+
 miLista = Lista()
 
 @app.route('/insertarLista',methods=['POST'])

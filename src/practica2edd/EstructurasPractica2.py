@@ -109,15 +109,20 @@ class Lista:
 		if aux==None:
 			print"lista vacia"
 		else:
-			print aux.id
-			print aux.palabra
-			while aux.siguiente!= None:
-				dot.node(str(aux.id), aux.palabra)
-				dot.node(str(aux.siguiente.id), aux.siguiente.palabra)
-				dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
-				aux = aux.siguiente
+			if (aux.siguiente == None):
 				print aux.id
 				print aux.palabra
+				dot.node(str(aux.id), aux.palabra)
+			else:
+				print aux.id
+				print aux.palabra
+				while aux.siguiente!= None:
+					dot.node(str(aux.id), aux.palabra)
+					dot.node(str(aux.siguiente.id), aux.siguiente.palabra)
+					dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
+					aux = aux.siguiente
+					print aux.id
+					print aux.palabra
 			print(dot.source)
 			dot.render('test-output/ImagenListaSimple.dot', view=False)
 
@@ -139,16 +144,16 @@ class Cola:
 #metodo que ingresa un nuevo numero a la cola
 	def queue(self,parametro):
 		nodo = nodoCola(parametro, self.contador)
-		print "se encolarpa: ", nodo.palabra
+		print "se encolarpa: ", nodo.numero
 		if self.primero == None:
 			self.primero = nodo
-			#self.graficarLista()
+			self.graficarCola()
 		else:
 			aux = self.primero
 			while True:
 				if aux.siguiente == None:
 					aux.siguiente=nodo
-					self.graficarLista()
+					self.graficarCola()
 					break
 				else:
 					aux = aux.siguiente
@@ -160,13 +165,14 @@ class Cola:
 		if self.primero == None:
 			return"la cola está vacia"
 		else:
-			deTurno=str(self.primero)
+			deTurno=str(self.primero.numero)
 			aux = self.primero.siguiente
 			self.primero=aux
-			return deTurno
+			self.graficarCola()
+			return "atendiendo al elemento: ",deTurno
 
 #metodo que imprime todos los elementos contenidos actualmente en la cola
-	def consultarCola():
+	def consultarCola(self):
 		aux = self.primero
 		if aux==None:
 			print"Cola vacia"
@@ -187,19 +193,99 @@ class Cola:
 		if aux==None:
 			print"Cola vacia"
 		else:
-			while aux.siguiente!= None:
+			if (aux.siguiente == None):
 				dot.node(str(aux.id), aux.numero)
-				dot.node(str(aux.siguiente.id), aux.siguiente.numero)
-				dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
-				aux = aux.siguiente
+			else:
+				while aux.siguiente!= None:
+					dot.node(str(aux.id), aux.numero)
+					dot.node(str(aux.siguiente.id), aux.siguiente.numero)
+					dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
+					aux = aux.siguiente
 			print(dot.source)
 			dot.render('test-output/ImagenCola.dot', view=False)
+#****************************************************************************************************************************
+#metodos de la pila
+
+class nodoPila:
+	def __init__(self, digito,correlativo):
+		self.id = correlativo
+		self.numero = digito
+		self.siguiente = None
+
+
+class pila:
+
+	def __init__(self):
+		self.primero=None
+		self.contador=0
+
+#metodo que ingresa un nuevo numero a la pila
+	def push(self,parametro):
+		nodo = nodoCola(parametro, self.contador)
+		print "se apilara: ", nodo.numero
+		if self.primero == None:
+			self.primero = nodo
+			self.graficarPila()
+		else:
+			aux = self.primero
+			self.primero = nodo
+			self.primero.siguiente = aux
+			self.graficarPila()
+		self.contador = self.contador + 1
+
+#metodo que elimina el elemento mas antiguo de la pila
+	def pop(self):
+		deTurno = ""
+		if self.primero == None:
+			return"la pila está vacia"
+		else:
+			deTurno=str(self.primero.numero)
+			aux = self.primero.siguiente
+			self.primero=aux
+			self.graficarPila()
+			return "atendiendo al elemento: ",deTurno
+
+#metodo que imprime todos los elementos contenidos actualmente en la pila
+	def consultarPila(self):
+		aux = self.primero
+		if aux==None:
+			print"Pila vacia"
+		else:
+			print aux.id
+			print aux.numero
+
+			while aux.siguiente!= None:
+				aux = aux.siguiente
+				print aux.id
+				print aux.numero
+
+#metodo que grafica la pila
+	def graficarPila(self):
+		dot = Digraph(comment='GraficaPila')
+		dot  #doctest: +ELLIPSIS
+		aux = self.primero
+		if aux==None:
+			print"Pila vacia"
+		else:
+			if aux.siguiente == None :
+				dot.node(str(aux.id), aux.numero)
+			else:
+				while aux.siguiente!= None:
+					dot.node(str(aux.id), aux.numero)
+					dot.node(str(aux.siguiente.id), aux.siguiente.numero)
+					dot.edge(str(aux.id), str(aux.siguiente.id), constraint='false')
+					aux = aux.siguiente
+			print(dot.source)
+			dot.render('test-output/ImagenPila.dot', view=False)
+
 #****************************************************************************************************************************
 
 #declaración de instancia de la lista
 miLista = Lista()
 #declaracion de la cola
 miCola = Cola()
+#declaracion de la instancia de la pila
+miPila = pila()
 #***************************************************************************************************************************
 #metodos web de la lista
 @app.route('/insertarLista',methods=['POST'])
@@ -230,9 +316,40 @@ def buscarLista():
 def insertarCola():
 	print"insertando en Cola"
 	parametro= str(request.form['dato'])
+	print parametro
 	miCola.queue(str(parametro))
 	miCola.consultarCola()
 	return "ok insertar Cola"
+
+@app.route('/sacarCola',methods=['POST'])
+def sacardeCola():
+	print"sacando de Cola"
+	parametro= str(request.form['dato'])
+	print "se eliminará un parametro ",parametro
+	retorno = miCola.dequeue()
+	miCola.consultarCola()
+	return str(retorno)
+
+#**************************************************************************************************************************
+#metodos web de la pila
+@app.route('/insertarPila',methods=['POST'])
+def insertarPila():
+	print"insertando en pila"
+	parametro= str(request.form['dato'])
+	print parametro
+	miPila.push(str(parametro))
+	miPila.consultarPila()
+	return "ok insertar Pila"
+
+@app.route('/sacarPila',methods=['POST'])
+def sacardePila():
+	print"sacando de Pila"
+	parametro= str(request.form['dato'])
+	print "se eliminará un parametro ",parametro
+	retorno = miPila.pop()
+	miPila.consultarPila()
+	return str(retorno)
+
 #**************************************************************************************************************************
 if __name__ == "__main__":
 	print"servicio corriendo"

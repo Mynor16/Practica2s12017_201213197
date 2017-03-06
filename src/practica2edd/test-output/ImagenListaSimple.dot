@@ -1,3 +1,4 @@
 // GraficaListaSimple
 digraph {
+	0 [label=hola]
 }

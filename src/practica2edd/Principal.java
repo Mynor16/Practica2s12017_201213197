@@ -145,8 +145,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel9.setText("ID:");
 
         jButton10.setText("Push");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Pop");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -258,14 +268,19 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Ingresar");
+        jButton8.setText("Encolar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
 
-        jButton9.setText("Extraer");
+        jButton9.setText("Desencolar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("ID:");
 
@@ -282,7 +297,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton8)
                 .addGap(18, 18, 18)
                 .addComponent(jButton9)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +317,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +375,52 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        if(!"".equals(this.jTextField8.getText())){
+        String nodito;
+        nodito = this.jTextField8.getText();
+        coneccion conect = new coneccion();
+        String insertado = conect.insertCola(nodito);
+        if(insertado!= null)
+        System.out.println(insertado);
+        this.jTextField8.setText("");
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        String nodito;
+        nodito = ":)";
+        coneccion conect = new coneccion();
+        String insertado = conect.deleteCola(nodito);
+        if(insertado!= null)
+        System.out.println(insertado);
+        this.jTextField8.setText("");
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(this.jTextField9.getText())){
+        String nodito;
+        nodito = this.jTextField9.getText();
+        coneccion conect = new coneccion();
+        String insertado = conect.insertPila(nodito);
+        if(insertado!= null)
+        System.out.println(insertado);
+        this.jTextField9.setText("");
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        String nodito;
+        nodito = ":)";
+        coneccion conect = new coneccion();
+        String eliminado = conect.deletePila(nodito);
+        if(eliminado!= null)
+        System.out.println(eliminado);
+        this.jTextField9.setText("");
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments

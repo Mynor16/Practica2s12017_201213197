@@ -79,4 +79,79 @@ public class coneccion {
         }
        return null;
     }
+    public static String insertCola(String elemento){
+        
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",elemento)
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/insertarCola");
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+       return null;
+    }
+    
+    public static String deleteCola(String id){
+        
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",id+"")
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/sacarCola");
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+       return null;
+    }
+    
+    public static String insertPila(String elemento){
+        
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",elemento)
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/insertarPila");
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+       return null;
+    }
+    
+    public static String deletePila(String id){
+        
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("dato",id+"")
+                .build();
+        try {
+            URL url = new URL("http://0.0.0.0:5000/sacarPila");
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+       return null;
+    }
 }
